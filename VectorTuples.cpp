@@ -15,14 +15,14 @@
 
 class Comp{
  public:
-  bool operator() (const std::tuple<int, int>& a,
-                      const std::tuple<int, int>& b) {
+  bool operator() (const std::tuple<float, int>& a,
+                      const std::tuple<float, int>& b) {
     return (std::get<0> (a)) < (std::get<0> (b));
   }
 };
 
 int main() {
-  std::vector<std::tuple<int, int>> myvect;
+  std::vector<std::tuple<float, int>> myvect;
   unsigned int seed = time(NULL);
 
   // Tuples of form (weight, vertex number)
@@ -48,9 +48,9 @@ int main() {
   }
 
   // Generating and printing the delta array
-  int delta_arr[10];
+  float delta_arr[10];
   for (auto &x : delta_arr) {
-    x = rand_r(&seed) % 10;
+    x = (rand_r(&seed) % 20) / 10.0;
   }
   std::cout << "The delta array " << std::endl;
   for (auto x : delta_arr) {
@@ -66,7 +66,7 @@ int main() {
    */
   while (myvect.size() != 0) {
     std::sort_heap(myvect.begin(), myvect.end(), Comp());
-    std::tuple<int, int> temp = myvect.front();
+    std::tuple<float, int> temp = myvect.front();
     myvect.erase(myvect.begin());
     if (delta_arr[std::get<1> (temp)] == 0) {
       std::cout << "Vertex " << std::get<1> (temp) << ' ';
